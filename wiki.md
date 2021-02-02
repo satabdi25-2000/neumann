@@ -15,24 +15,19 @@ Steps to be followed:
 
 **1**.Create a folder named RISCV-TOOLS INSTALLATION.Set up the installation path for the same in the `.bashrc` or `etc/environment` file.
 
-`RISCV=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION`
-  
-`PATH=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games`
+- `RISCV=/home/vlsi/Desktop/RISCV-TOOLS-INSTALLATION`
+- `PATH=/home/vlsi/Desktop/RISCV-TOOLS INSTALLATION:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games`
+- `cd RISCV-TOOLS INSTALLATION`
+- `git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
 
-`cd RISCV-TOOLS INSTALLATION`
+**2**.Standard pacakages are needed to be installed,
+- `sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
 
-`git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
-
-2.Standard pacakages are needed to be installed,
-
-`sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
-
-3.After cloning and installing the packages one should configure the particular build mode to be used.As the newlib gcc compiler is needed for the Pulp Platform.this is to be configured.
-
-`./configure --prefix=$RISCV`
+**3**.After cloning and installing the packages one should configure the particular build mode to be used.As the newlib gcc compiler is needed for the Pulp Platform.this is to be configured.
+- `./configure --prefix=$RISCV`
 RISCV is the path for RISCV-TOOLS INSTALLATION.
 
-4.`make` (This is the step of installation of the toolchain)
+**4**.`make` (This is the step of installation of the toolchain)
 
 ### RISCV Tools
 
@@ -40,42 +35,47 @@ To run a simple C program using riscv-gnu-toolchain we need some packages to be 
 
 **1.Spike**
 Clone this git repository `https://github.com/riscv/riscv-isa-sim`
-a. cd riscv-isa-sim
-b. sudo apt-get install device-tree-compiler
-c. mkdir build
-d. cd build
-e. ../configure --prefix=$RISCV
-f. make
-g. make install
+-  cd riscv-isa-sim
+-  sudo apt-get install device-tree-compiler
+-  mkdir build
+-  cd build
+-  ../configure --prefix=$RISCV
+-  make
+-  make install
 
 **2.riscv-pk**
 The RISC-V pk(Proxy Kernel) is a lightweight application execution environment that can host
 statically-linked RISC-V ELF binaries.
-Clone the git db: `https://github.com/riscv/riscv-pk.git`
-a. Set the environment variable in `.bashrc` or `etc/environment`.
-b. cd riscv-pk 
-c. mkdir build
-d. cd build
-e. ../configure --prefix=$RISCV --host=riscv32-unknown-elf (newlib gcc)
-f. make
-g. make install or use sudo make install
+- git clone `https://github.com/riscv/riscv-pk.git`
+- Set the environment variable in `.bashrc` or `etc/environment`.
+-  cd riscv-pk 
+- mkdir build
+- cd build
+- ../configure --prefix=$RISCV --host=riscv32-unknown-elf (newlib gcc)
+- make
+-  make install or use sudo make install
 
 ## PULP PLATFORM AND TOOLCHAIN SETUP
 
 PULPino has the following requirements-
 
-1.ModelSim //
-2.CMake >= 2.8.0 //
-3.riscv-toolchain(riscv32-unknown-elf-gcc compiler) //
-4.verilator 
+- 1.Modelsim 
+- 2.Cmake >= version 2.80 
+- 3.riscv-toolchain(riscv32-unknown-elf-gcc compiler) 
+- 4.verilator
 
-For setting up the pulp platform this has to be followed-
-sudo apt-get install tcsh (for tcl scripts if not present)
-sudo apt-get install cmake (for cmake scripts)
-sudo apt-get install vim-gtk3 
-Set the `PATH` for the pulp-riscv toolchain to work in the environment file.
-git clone --recursive https://github.com/pulp-platform/pulp-riscv-gnu-toolchain
-Create a folder to store all the binaries of the pulpino cross compiler.
+For setting up the pulp platform this has to be followed- 
+- sudo apt-get install tcsh
+- sudo apt-get install cmake (for cmake scripts)
+- sudo apt-get install vim-gtk3 
+- Set the `PATH` for the pulp-riscv toolchain to work in the environment file.
+- git clone --recursive https://github.com/pulp-platform/pulp-riscv-gnu-toolchain
+- Create a folder to store all the binaries of the pulpino cross compiler.(say,pulptoolchain)
+- Set up the PATH for the pulp toolchain.
+- ./configure --prefix= /home/ vlsi /Desktop/pulptoolchain --with-arch=rv32imc --with-cmodel=medlow --enable-multilib 
+- make 
+- The binaries are now installed in the folder named pulptoolchain.(riscv32-unknown-elf-gcc)
+- Now the pulpino repository can be cloned with- git clone https://github.com/pulp-platform/pulpino
 
 
 ## Creating Cadence Work Area
