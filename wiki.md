@@ -4,21 +4,26 @@ This wiki holds the knowledgebase for Project Neumann.
 ## RISC-V Tool Chain Setup
 
 **Objective**
+
 This section describes how to setup the RISC-V gcc compiler toolchain. The Pulp Platform supports a generic ELF/Newlib toolchain build mode.
 
 **Installation of RISC-V Toolchain**
+
 For installing the RISC-V gnu toolchain,the newlib-gnu need to be installed.
+
 Steps to be followed:
-1.Create a folder named RISCV-TOOLS INSTALLATION.Set up the installation path for the same in the `.bashrc` or `etc/environment` file.
- `RISCV=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION
+
+**1**.Create a folder named RISCV-TOOLS INSTALLATION.Set up the installation path for the same in the `.bashrc` or `etc/environment` file.
+
+`RISCV=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION`
   
-  PATH=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games`
+`PATH=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games`
 
 `cd RISCV-TOOLS INSTALLATION`
 
 `git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
 
-2.Standard pacakages are needed to be installed;
+2.Standard pacakages are needed to be installed,
 
 `sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
 
@@ -35,25 +40,42 @@ To run a simple C program using riscv-gnu-toolchain we need some packages to be 
 
 **1.Spike**
 Clone this git repository `https://github.com/riscv/riscv-isa-sim`
-Go to the git repo folder riscv-isa-sim and Follow these commands
-a. sudo apt-get install device-tree-compiler
-b. mkdir build
-c. cd build
-d. ../configure --prefix=$RISCV
-e. make
-f. make install
+a. cd riscv-isa-sim
+b. sudo apt-get install device-tree-compiler
+c. mkdir build
+d. cd build
+e. ../configure --prefix=$RISCV
+f. make
+g. make install
 
 **2.riscv-pk**
 The RISC-V pk(Proxy Kernel) is a lightweight application execution environment that can host
 statically-linked RISC-V ELF binaries.
-Clone the git db: https://github.com/riscv/riscv-pk.git
-1. Set the environment variable in `.bashrc` or `etc/environment`.
-a. cd riscv-pk 
-b. mkdir build
-c. cd build
-d. ../configure --prefix=$RISCV --host=riscv32-unknown-elf (newlib gcc)
-e. make
-f. make install or use sudo make install
+Clone the git db: `https://github.com/riscv/riscv-pk.git`
+a. Set the environment variable in `.bashrc` or `etc/environment`.
+b. cd riscv-pk 
+c. mkdir build
+d. cd build
+e. ../configure --prefix=$RISCV --host=riscv32-unknown-elf (newlib gcc)
+f. make
+g. make install or use sudo make install
+
+## PULP PLATFORM AND TOOLCHAIN SETUP
+
+PULPino has the following requirements-
+
+1.ModelSim //
+2.CMake >= 2.8.0 //
+3.riscv-toolchain(riscv32-unknown-elf-gcc compiler) //
+4.verilator 
+
+For setting up the pulp platform this has to be followed-
+sudo apt-get install tcsh (for tcl scripts if not present)
+sudo apt-get install cmake (for cmake scripts)
+sudo apt-get install vim-gtk3 
+Set the `PATH` for the pulp-riscv toolchain to work in the environment file.
+git clone --recursive https://github.com/pulp-platform/pulp-riscv-gnu-toolchain
+Create a folder to store all the binaries of the pulpino cross compiler.
 
 
 ## Creating Cadence Work Area
