@@ -24,7 +24,7 @@ Steps to be followed:
 - `sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
 
 **3**.After cloning and installing the packages one should configure the particular build mode to be used.As the newlib gcc compiler is needed for the Pulp Platform.this is to be configured.
-- `./configure --prefix=$RISCV`
+ `./configure --prefix=$RISCV`
 RISCV is the path for RISCV-TOOLS INSTALLATION.
 
 **4**.`make` (This is the step of installation of the toolchain)
