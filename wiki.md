@@ -11,20 +11,50 @@ For installing the RISC-V gnu toolchain,the newlib-gnu need to be installed.
 Steps to be followed:
 1.Create a folder named RISCV-TOOLS INSTALLATION.Set up the installation path for the same in the `.bashrc` or `etc/environment` file.
  `RISCV=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION
+  
   PATH=/home/sevyamm/Desktop/RISCV-TOOLS INSTALLATION:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games`
- `cd RISCV-TOOLS INSTALLATION`
- `git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
+
+`cd RISCV-TOOLS INSTALLATION`
+
+`git clone --recursive https://github.com/riscv/riscv-gnu-toolchain`
 
 2.Standard pacakages are needed to be installed;
+
 `sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev`
 
 3.After cloning and installing the packages one should configure the particular build mode to be used.As the newlib gcc compiler is needed for the Pulp Platform.this is to be configured.
+
 `./configure --prefix=$RISCV`
 RISCV is the path for RISCV-TOOLS INSTALLATION.
 
 4.`make` (This is the step of installation of the toolchain)
 
-5.
+### RISCV Tools
+
+To run a simple C program using riscv-gnu-toolchain we need some packages to be installed namely,Spike and riscv-pk.
+
+**1.Spike**
+Clone this git repository `https://github.com/riscv/riscv-isa-sim`
+Go to the git repo folder riscv-isa-sim and Follow these commands
+a. sudo apt-get install device-tree-compiler
+b. mkdir build
+c. cd build
+d. ../configure --prefix=$RISCV
+e. make
+f. make install
+
+**2.riscv-pk**
+The RISC-V pk(Proxy Kernel) is a lightweight application execution environment that can host
+statically-linked RISC-V ELF binaries.
+Clone the git db: https://github.com/riscv/riscv-pk.git
+1. Set the environment variable in `.bashrc` or `etc/environment`.
+a. cd riscv-pk 
+b. mkdir build
+c. cd build
+d. ../configure --prefix=$RISCV --host=riscv32-unknown-elf (newlib gcc)
+e. make
+f. make install or use sudo make install
+
 
 ## Creating Cadence Work Area
 Check the video https://youtu.be/zQdRLo1zv2M
